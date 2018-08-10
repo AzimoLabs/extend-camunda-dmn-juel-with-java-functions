@@ -1,0 +1,5 @@
+/target/
+.idea/
+camunda.iml
+/logs/
+.DS_Store

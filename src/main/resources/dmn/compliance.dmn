@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="compliance_example_drd" name="Compliance" namespace="http://camunda.org/schema/1.0/dmn">
+  <inputData id="InputData_1hvq3vy" name="Sender age">
+    <extensionElements>
+      <biodi:bounds x="-301" y="484" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_0e3deab" name="Destination country">
+    <extensionElements>
+      <biodi:bounds x="12" y="479" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_0z1xab2" name="Amount">
+    <extensionElements>
+      <biodi:bounds x="-294" y="359" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_07fqx2j" name="Sending country">
+    <extensionElements>
+      <biodi:bounds x="10" y="424" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <decision id="choose_compliance_strategy" name="Choose compliance strategy">
+    <extensionElements>
+      <biodi:bounds x="-101" y="274" width="180" height="80" />
+      <biodi:edge source="get_successful_transaction_count">
+        <biodi:waypoints x="-42" y="576" />
+        <biodi:waypoints x="-32" y="576" />
+        <biodi:waypoints x="-33" y="354" />
+      </biodi:edge>
+      <biodi:edge source="InputData_0z1xab2">
+        <biodi:waypoints x="-169" y="382" />
+        <biodi:waypoints x="-87" y="382" />
+        <biodi:waypoints x="-87" y="354" />
+      </biodi:edge>
+      <biodi:edge source="InputData_1vfmoyo">
+        <biodi:waypoints x="-174" y="442" />
+        <biodi:waypoints x="-70" y="442" />
+        <biodi:waypoints x="-70" y="354" />
+      </biodi:edge>
+      <biodi:edge source="InputData_1hvq3vy">
+        <biodi:waypoints x="-176" y="507" />
+        <biodi:waypoints x="-52" y="507" />
+        <biodi:waypoints x="-52" y="354" />
+      </biodi:edge>
+      <biodi:edge source="InputData_07fqx2j">
+        <biodi:waypoints x="10" y="447" />
+        <biodi:waypoints x="1" y="447" />
+        <biodi:waypoints x="1" y="354" />
+      </biodi:edge>
+      <biodi:edge source="InputData_0e3deab">
+        <biodi:waypoints x="12" y="502" />
+        <biodi:waypoints x="-11" y="502" />
+        <biodi:waypoints x="-11" y="354" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredDecision href="#get_successful_transaction_count" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_0z1xab2" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_1vfmoyo" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_1hvq3vy" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_07fqx2j" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_0e3deab" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1h4stcl" hitPolicy="FIRST">
+      <input id="InputClause_18b0hbk" label="Amount">
+        <inputExpression id="LiteralExpression_13py3ts" typeRef="double">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_057ou1t" label="Currency">
+        <inputExpression id="LiteralExpression_0olmmhy" typeRef="string">
+          <text>currency</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_15gyu54" label="Sender age">
+        <inputExpression id="LiteralExpression_03ji9yq" typeRef="integer">
+          <text>sender_age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0dm8eje" label="Sending country">
+        <inputExpression id="LiteralExpression_12j9x84" typeRef="string">
+          <text>sending_country</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ago9la" label="Destination country">
+        <inputExpression id="LiteralExpression_0sp4jlb" typeRef="string">
+          <text>destination_country</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_03qhtoz" label="Successful transaction count">
+        <inputExpression id="LiteralExpression_14c6hq9" typeRef="integer">
+          <text>successful_transaction_count</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1yvhbk0" label="Compliance strategy" name="compliance_strategy" typeRef="string" />
+      <output id="OutputClause_1h2au6l" label="Is proof of identity document required" name="is_poi_document_required" typeRef="boolean" />
+      <output id="OutputClause_0fhlech" label="Is proof of address document required" name="is_poa_document_required" typeRef="boolean" />
+      <rule id="DecisionRule_1d32dm1">
+        <description>Transaction can be accepted without additional checks</description>
+        <inputEntry id="UnaryTests_12rize9">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0341js4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19uh9lf">
+          <text>&gt;30</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f3cggy">
+          <text>"USA"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01jrbkt">
+          <text>"Poland"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0x6hkyz">
+          <text>&gt;100</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_10f7vwf">
+          <text>"automatic_acceptance"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1kgif72">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0q7bn4z">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pw6i9j">
+        <description>Transaction can be accepted without additional checks</description>
+        <inputEntry id="UnaryTests_0v52ck4">
+          <text>&lt;=10</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01yhabm">
+          <text>"CAD"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kyyc6b">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1yhfpt1">
+          <text>"Canada"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1dn514l">
+          <text>"USA"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ddbkch">
+          <text>&gt;200</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0q6cncm">
+          <text>"automatic_acceptance"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_03mddm8">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1r86y28">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0h9yhof">
+        <description>Transaction can be accepted without additional checks</description>
+        <inputEntry id="UnaryTests_1whmci0">
+          <text>&lt;=10</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zhhbce">
+          <text>"PLN"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0a3hrng">
+          <text>&gt;50</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rc5rkk">
+          <text>"Poland"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_090t8ba">
+          <text>"Poland"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fxhtc5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15kasfk">
+          <text>"automatic_acceptance"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0gvcfqr">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ups0bn">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vru73b">
+        <description>Transaction should be rejected</description>
+        <inputEntry id="UnaryTests_0zz4v73">
+          <text>&gt;5000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pyzfw4">
+          <text>"EUR"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0tpeom0">
+          <text>&lt;18</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_089ohy0">
+          <text>"India"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v6xyyx">
+          <text>"Ivory Coast"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_191qhgw">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dlgetf">
+          <text>"automatic_rejection"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0hpqd1x">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13ohfx8">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vbtfga">
+        <description>Transaction should be rejected</description>
+        <inputEntry id="UnaryTests_1iqlgfi">
+          <text>&gt;10000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0qcjr65">
+          <text>"USD"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17reunz">
+          <text>&lt;18</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pid1sb">
+          <text>"USA"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0b18m9n">
+          <text>"Canada"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bnmhfs">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pl6h62">
+          <text>"automatic_rejection"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ledmct">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1290yqf">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qcw034">
+        <description>Proof of identity is required</description>
+        <inputEntry id="UnaryTests_12e2ezn">
+          <text>&gt;1000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10tro27">
+          <text>"EUR"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06rf6py">
+          <text>&lt;25</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18osc73">
+          <text>"Russia"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vg7jnk">
+          <text>"USA"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gp2lv7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nu82xr">
+          <text>"manual_review"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_00k6hwo">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0zqff12">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_165hcbn">
+        <description>Proof of address is required</description>
+        <inputEntry id="UnaryTests_1axsncy">
+          <text>&gt;10000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r384wa">
+          <text>"USD"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hos8tm">
+          <text>&lt;20</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0sn38c4">
+          <text>"USA"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11u2wxy">
+          <text>"Canada"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0711g71">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_184923s">
+          <text>"manual_review"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1g95btf">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ozbgzx">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04owqxo">
+        <description>Not matched compliance strategy</description>
+        <inputEntry id="UnaryTests_0fucluw">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v54jct">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0svcieo">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hz8sua">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mkai45">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pmpixt">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13lunob">
+          <text>"none"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1151mof">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ybnsrl">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="compliance_final_decision" name="Compliance final decision">
+    <extensionElements>
+      <biodi:bounds x="117" y="134" width="180" height="80" />
+      <biodi:edge source="check_if_user_has_verified_and_accepted_poi">
+        <biodi:waypoints x="148" y="576" />
+        <biodi:waypoints x="148" y="389" />
+        <biodi:waypoints x="219" y="389" />
+        <biodi:waypoints x="219" y="214" />
+      </biodi:edge>
+      <biodi:edge source="check_if_user_has_verified_and_accepted_poa">
+        <biodi:waypoints x="355" y="572" />
+        <biodi:waypoints x="355" y="387" />
+        <biodi:waypoints x="263" y="387" />
+        <biodi:waypoints x="263" y="214" />
+      </biodi:edge>
+      <biodi:edge source="choose_compliance_strategy">
+        <biodi:waypoints x="-11" y="274" />
+        <biodi:waypoints x="-11" y="253" />
+        <biodi:waypoints x="164" y="253" />
+        <biodi:waypoints x="164" y="214" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredDecision href="#check_if_user_has_verified_and_accepted_poi" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#check_if_user_has_verified_and_accepted_poa" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#choose_compliance_strategy" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1s4qaz1" hitPolicy="FIRST">
+      <input id="InputClause_1fsvg8x" label="Compliance strategy">
+        <inputExpression id="LiteralExpression_1m22zp6" typeRef="string">
+          <text>compliance_strategy</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1pyj2wa" label="Is proof of identity required">
+        <inputExpression id="LiteralExpression_1ta44xh" typeRef="boolean">
+          <text>is_poi_document_required</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_17ay9t6" label="User has verified and accepted proof of identity">
+        <inputExpression id="LiteralExpression_1j4d7jd" typeRef="boolean">
+          <text>user_has_verified_and_accepted_poi</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ets4sa" label="Is proof of address required">
+        <inputExpression id="LiteralExpression_0q70lx5" typeRef="boolean">
+          <text>is_poa_document_required</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1w04kf3" label="User has verified and accepted proof of address">
+        <inputExpression id="LiteralExpression_140uumd" typeRef="boolean">
+          <text>user_has_verified_and_accepted_poa</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0nsnlpa" label="Final decision" name="final_decision" typeRef="string" />
+      <rule id="DecisionRule_0e2cv5w">
+        <description>Transaction rejected</description>
+        <inputEntry id="UnaryTests_13x7y0s">
+          <text>"automatic_rejection"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gtjs19">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18rxaue">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dcjr2y">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kw1yh5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1la36q9">
+          <text>"reject"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04rsfdx">
+        <description>Transaction accepted</description>
+        <inputEntry id="UnaryTests_18kcogm">
+          <text>"automatic_acceptance"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dnh4s4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1185gvg">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04omc7q">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zh0tre">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0rvcas1">
+          <text>"accept"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12ufz18">
+        <description>Transaction rejected due to lack of required documents</description>
+        <inputEntry id="UnaryTests_05cccp4">
+          <text>"manual_review"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17yz65j">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0y2ot64">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0yf3kwh">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gvib5p">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0gajcli">
+          <text>"reject"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0dgq4er">
+        <description>Transaction rejected due to lack of required documents</description>
+        <inputEntry id="UnaryTests_0bde0ad">
+          <text>"manual_review"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02cchf7">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ziybs1">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_176vjfr">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0d1osht">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ehbme8">
+          <text>"reject"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0spdbq9">
+        <description>Transaction rejected due to lack of required documents</description>
+        <inputEntry id="UnaryTests_0srfmvu">
+          <text>"manual_review"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ypn7wh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0eq6p0w">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06a2k20">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1r1z2y8">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nejjmq">
+          <text>"reject"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1fx5pzf">
+        <description>Transaction rejected due to lack of required documents</description>
+        <inputEntry id="UnaryTests_01rv8yf">
+          <text>"manual_review"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05ugiyk">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xrnvpi">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02ntn5c">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tnwost">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1d331hv">
+          <text>"accept"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ljjtkz">
+        <description>Transaction rejected if not match to conditions</description>
+        <inputEntry id="UnaryTests_10ceozr">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15obqje">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0d5w2hx">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ke8m7l">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fgqvf8">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09v6mlh">
+          <text>"reject"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="get_successful_transaction_count" name="Get successful transaction count for user">
+    <extensionElements>
+      <biodi:bounds x="-142" y="576" width="180" height="80" />
+      <biodi:edge source="BusinessKnowledgeModel_03150tr">
+        <biodi:waypoints x="-57" y="781" />
+        <biodi:waypoints x="-56" y="656" />
+      </biodi:edge>
+      <biodi:edge source="InputData_1u32om1">
+        <biodi:waypoints x="105" y="745" />
+        <biodi:waypoints x="105" y="707" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_1n1hgua" name="successful_transaction_count" typeRef="integer" />
+    <knowledgeRequirement>
+      <requiredKnowledge href="#BusinessKnowledgeModel_03150tr" />
+    </knowledgeRequirement>
+    <literalExpression id="LiteralExpression_19bn88y" expressionLanguage="juel">
+      <text>transactionService.getSuccessfulTransactionCount(user_id)</text>
+    </literalExpression>
+  </decision>
+  <decision id="check_if_user_has_verified_and_accepted_poi" name="Check if user has verified and accepted &#34;Proof of Identity&#34;">
+    <extensionElements>
+      <biodi:bounds x="60" y="576" width="180" height="80" />
+      <biodi:edge source="BusinessKnowledgeModel_17bk5ud">
+        <biodi:waypoints x="329" y="782" />
+        <biodi:waypoints x="329" y="734" />
+        <biodi:waypoints x="209" y="734" />
+        <biodi:waypoints x="209" y="656" />
+      </biodi:edge>
+      <biodi:edge source="InputData_1u32om1">
+        <biodi:waypoints x="105" y="745" />
+        <biodi:waypoints x="105" y="656" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_09lmxtp" name="user_has_verified_and_accepted_poi" typeRef="boolean" />
+    <informationRequirement>
+      <requiredInput href="#InputData_1u32om1" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_1u32om1" />
+    </informationRequirement>
+    <knowledgeRequirement>
+      <requiredKnowledge href="#BusinessKnowledgeModel_17bk5ud" />
+    </knowledgeRequirement>
+    <literalExpression id="LiteralExpression_1iesj6n" expressionLanguage="juel">
+      <text>compliance:userHasVerifiedAndAcceptedDocument(user_id,"PROOF_OF_IDENTITY")</text>
+    </literalExpression>
+  </decision>
+  <businessKnowledgeModel id="BusinessKnowledgeModel_17bk5ud" name="Documents manager">
+    <extensionElements>
+      <biodi:bounds x="284" y="782" width="135" height="46" />
+    </extensionElements>
+  </businessKnowledgeModel>
+  <businessKnowledgeModel id="BusinessKnowledgeModel_03150tr" name="User metadata service">
+    <extensionElements>
+      <biodi:bounds x="-126" y="781" width="135" height="46" />
+    </extensionElements>
+  </businessKnowledgeModel>
+  <decision id="check_if_user_has_verified_and_accepted_poa" name="Check if user has verified and accepted &#34;Proof of Address&#34;">
+    <extensionElements>
+      <biodi:bounds x="259" y="575" width="180" height="80" />
+      <biodi:edge source="InputData_1u32om1">
+        <biodi:waypoints x="169" y="745" />
+        <biodi:waypoints x="169" y="708" />
+        <biodi:waypoints x="354" y="708" />
+        <biodi:waypoints x="354" y="655" />
+      </biodi:edge>
+      <biodi:edge source="BusinessKnowledgeModel_17bk5ud">
+        <biodi:waypoints x="372" y="782" />
+        <biodi:waypoints x="372" y="733" />
+        <biodi:waypoints x="387" y="733" />
+        <biodi:waypoints x="387" y="655" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_1b80v2b" name="user_has_verified_and_accepted_poa" typeRef="boolean" />
+    <informationRequirement>
+      <requiredInput href="#InputData_1u32om1" />
+    </informationRequirement>
+    <knowledgeRequirement>
+      <requiredKnowledge href="#BusinessKnowledgeModel_17bk5ud" />
+    </knowledgeRequirement>
+    <literalExpression id="LiteralExpression_10ny2dh" expressionLanguage="juel">
+      <text>compliance:userHasVerifiedAndAcceptedDocument(user_id,"PROOF_OF_ADDRESS")</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_1u32om1" name="User ID">
+    <extensionElements>
+      <biodi:bounds x="75" y="745" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_1vfmoyo" name="Currency">
+    <extensionElements>
+      <biodi:bounds x="-299" y="419" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+</definitions>

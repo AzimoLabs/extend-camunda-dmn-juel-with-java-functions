@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <property name="APP" value="camunda"/>
+    <property name="LOG_FILE" value="${file.logfile.path:-logs}/${APP}.log"/>
+    <property name="LOG_JSON_FILE" value="${json.logfile.path:-logs}/${APP}.json"/>
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%clr(%5p) %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} [%clr(%-40.40logger{40}){cyan}][%t][%clr(%X{correlationId}){magenta}] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    <property name="FILE_LOG_PATTERN"
+              value="%5p %d{yyyy-MM-dd HH:mm:ss.SSS} [%-40.40logger{39}][%t][%X{correlationId}] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    <property name="ROOT_LOG_LEVEL" value="INFO"/>
+    <property name="APP_LOG_LEVEL" value="INFO"/>
+    <jmxConfigurator/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="file"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="json"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder
+                class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <version/>
+                <mdc/>
+                <pattern>
+                    <pattern>
+                        {
+                        "logger": "%logger",
+                        "level": "%level",
+                        "thread": "%thread",
+                        "message": "%message"
+                        }
+                    </pattern>
+                </pattern>
+                <stackTrace/>
+            </providers>
+        </encoder>
+        <file>${LOG_JSON_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_JSON_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.azimolabs" level="${APP_LOG_LEVEL}" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="json"/>
+    </logger>
+
+    <root level="${ROOT_LOG_LEVEL}">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="json"/>
+    </root>
+
+</configuration>

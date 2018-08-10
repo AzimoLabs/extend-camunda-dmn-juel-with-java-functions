@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  context-path: /${spring.application.name}/
+
+management:
+  context-path: /${spring.application.name}/manage
+  security:
+    enabled: false
+  port: 8081
+  health:
+    camunda:
+      enabled: true
+
+spring:
+  application:
+    name: camunda
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgresql.host/camunda
+    username: admin
+    password: admin
+camunda:
+  bpm:
+    webapp:
+      index-redirect-enabled: true
+    admin-user:
+      id: demo
+      password: demo
+      firstName: Demo
+    history-level: full

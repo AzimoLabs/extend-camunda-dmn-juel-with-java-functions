@@ -1,13 +1,13 @@
 ## Camunda Spring Boot example with JUEL custom functions
-This example contains ready to run Spring Boot application with Camunda where JUEL expression language is extended with custom functions.
-There are two methods of extending JUEL shown. Extensions are implemented as:
+This example contains ready to run Spring Boot application with Camunda where JUEL expression language is extended.
+There are two ways how JUEL can be extended. Extensions are implemented as:
 
 * `Spring beans` - they are registered as expression language extensions in `SpringExpressionManager` by default and all methods from registered beans can be accessed in DMN
 * `Function mappers` - they are registered in ExpressionManager manually and they map EL functions into static Java methods
 
 Decision DMN with custom functions used is shown [here](https://github.com/AzimoLabs/extend-camunda-dmn-juel-with-java-functions/blob/master/src/main/resources/dmn/compliance.dmn)
 
-### Decision Requirements Graph
+### Decision Requirements Graph used in example
 ![Alt text](picture/compliance_decision_drd.png?raw=true "Architecture")
 
 ## Authors
